@@ -3,572 +3,805 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>12-Month DCA Plan — High-Risk Basket</title>
+  <title>High-Risk Asymmetric DCA — January Plan</title>
   <style>
-    :root{--bg:#0b0f14;--card:#111824;--muted:#95a3b3;--text:#e8eef6;--line:#1c2a3a;--accent:#4aa3ff;}
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#101b27;
+      --text:#e8eef6;
+      --muted:#aab8c6;
+      --accent:#57c7ff;
+      --danger:#ff6b6b;
+      --ok:#67e8a9;
+      --border:rgba(255,255,255,.09);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    header{position:sticky;top:0;z-index:10;background:rgba(11,15,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .wrap{max-width:1100px;margin:0 auto;padding:16px}
-    h1{margin:0;font-size:16px;letter-spacing:.2px}
-    .muted{color:var(--muted);font-size:13px;line-height:1.35}
-    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .divider{height:1px;background:var(--line);margin:12px 0}
-    .btn{border:1px solid var(--line);background:#0d1420;color:var(--text);padding:9px 11px;border-radius:10px;cursor:pointer}
-    .btn:hover{border-color:#2a3b52}
-    .btn.primary{border-color:transparent;background:var(--accent);color:#04111f;font-weight:700}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
-    .pill strong{color:var(--text)}
+    body{
+      margin:0; font-family:var(--sans);
+      background: radial-gradient(1200px 600px at 20% 0%, rgba(87,199,255,.14), transparent 55%),
+                  radial-gradient(900px 500px at 90% 25%, rgba(103,232,169,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1200px; margin:0 auto; padding:20px}
+    header{
+      display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; justify-content:space-between;
+      margin-bottom:16px;
+    }
+    h1{margin:0; font-size:22px; letter-spacing:.2px}
+    .sub{color:var(--muted); font-size:13px; margin-top:4px; max-width:72ch}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .card .bd{padding:16px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      background: rgba(87,199,255,.10);
+      border:1px solid rgba(87,199,255,.25);
+      color:var(--text); font-size:12px;
+      white-space:nowrap;
+    }
+    .pill .dot{width:8px; height:8px; border-radius:99px; background:var(--accent)}
+    .warn{
+      background: rgba(255,107,107,.10);
+      border:1px solid rgba(255,107,107,.25);
+    }
+    .warn .dot{background:var(--danger)}
+    .ok{
+      background: rgba(103,232,169,.10);
+      border:1px solid rgba(103,232,169,.22);
+    }
+    .ok .dot{background:var(--ok)}
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .kpi .box{
+      padding:10px 12px; border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+    }
+    .kpi .label{color:var(--muted); font-size:12px}
+    .kpi .val{font-family:var(--mono); font-size:14px; margin-top:6px}
+    .slider{
+      margin-top:8px;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+    }
     input[type="range"]{width:100%}
-    input[type="number"]{width:100%;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:#0d1420;color:var(--text)}
-    table{width:100%;border-collapse:separate;border-spacing:0 8px}
-    th{font-size:12px;color:var(--muted);font-weight:650;text-align:left;padding:10px}
-    td{padding:10px;vertical-align:top}
-    .trow{background:#0d1420;border:1px solid var(--line);border-radius:12px}
-    .trow td:first-child{border-top-left-radius:12px;border-bottom-left-radius:12px}
-    .trow td:last-child{border-top-right-radius:12px;border-bottom-right-radius:12px}
-    .token{font-weight:900}
-    .tiny{font-size:12px;color:var(--muted)}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-    .pct{font-weight:800}
-    .amt{font-weight:800}
-    .badge{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
-    .right{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
-    .note{font-size:12px;color:var(--muted)}
-    .kpi{display:flex;gap:8px;flex-wrap:wrap}
-    .kpi .badge strong{color:var(--text)}
-    /* modal */
-    .modal-open{overflow:hidden}
-    #modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;padding:16px;align-items:center;justify-content:center}
-    #modalCard{max-height:calc(100vh - 32px);overflow:auto}
-    h2{margin:0 0 10px 0;font-size:14px;color:#cfe3ff}
-    h3{margin:0 0 6px 0;font-size:13px;color:#d8e9ff}
-    ul{margin:8px 0 0 18px;color:var(--text)}
-    li{margin:6px 0}
-    .warn{color:#ffd479}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .mono{font-family:var(--mono)}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .hr{height:1px; background:var(--border); margin:14px 0}
+    table{width:100%; border-collapse:collapse}
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      font-size:13px;
+      vertical-align:top;
+    }
+    th{color:var(--muted); font-weight:600}
+    .tokenBtn{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.20);
+      cursor:pointer;
+      color:var(--text);
+    }
+    .tokenBtn:hover{border-color:rgba(87,199,255,.35)}
+    .badge{
+      font-family:var(--mono);
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .alloc{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--text);
+      opacity:.95;
+      white-space:nowrap;
+    }
+    /* Modal */
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:1000;
+    }
+    .modal{
+      width:min(860px, 96vw);
+      max-height: 92vh;
+      overflow:hidden;
+      border-radius: 18px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      display:flex;
+      flex-direction:column;
+    }
+    .modalHeader{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    }
+    .modalTitle{margin:0; font-size:16px}
+    .modalClose{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+    }
+    .modalClose:hover{border-color:rgba(255,255,255,.22)}
+    /* This is the important bit: the body scrolls */
+    .modalBody{
+      padding:16px;
+      overflow-y:auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: calc(92vh - 58px);
+    }
+    .links{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;
+    }
+    .linkBtn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.20);
+      font-size:12px;
+      color:var(--text);
+    }
+    .linkBtn:hover{border-color:rgba(87,199,255,.35); text-decoration:none}
+    .sectionTitle{font-size:13px; color:var(--muted); margin:18px 0 8px}
+    ul{margin:10px 0 0 18px}
+    li{margin:6px 0; color:var(--text); opacity:.95}
+    .footnote{color:var(--muted); font-size:12px; margin-top:14px}
+    .strategy p{line-height:1.55; color:var(--text); opacity:.95}
+    .strategy h3{margin:18px 0 8px; font-size:15px}
+    .strategy .mini{color:var(--muted); font-size:12px}
   </style>
 </head>
+
 <body>
-<header>
   <div class="wrap">
-    <div class="row" style="justify-content:space-between;align-items:flex-start">
+    <header>
       <div>
-        <h1>12-Month DCA Plan — High-Risk Basket</h1>
-        <div class="muted">Static plan: allocation % per token + 12-month monthly buy schedule. Click any token for its thesis + “why 30–100× is plausible if it wins”.</div>
-      </div>
-      <div class="pill"><strong id="asOf">Plan</strong> <span class="tiny" id="stamp"></span></div>
-    </div>
-  </div>
-</header>
-
-<div class="wrap grid">
-  <section class="card">
-    <h2>Allocations (click token for thesis)</h2>
-    <div class="muted">Percentages sum to 100%. Monthly amounts update from the slider. These are not “predictions”; they’re a structured way to buy optionality without improvising under volatility.</div>
-    <div class="divider"></div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:120px">Token</th>
-          <th>Sector</th>
-          <th style="width:110px">Alloc %</th>
-          <th style="width:160px">Monthly buy</th>
-          <th style="width:120px"></th>
-        </tr>
-      </thead>
-      <tbody id="allocBody"></tbody>
-    </table>
-    <div class="divider"></div>
-    <div class="note"><span class="warn">Important:</span> This page assumes you already accept the risk profile and are implementing a rules-based DCA. It does not fetch live prices or execute trades.</div>
-  </section>
-
-  <aside class="card">
-    <h2>Monthly buy slider</h2>
-    <div class="muted">Choose your total monthly buy-in. The table will allocate amounts per token and generate a 12-month schedule.</div>
-
-    <div class="divider"></div>
-
-    <div class="row">
-      <div style="flex:1;min-width:240px">
-        <div class="tiny">Monthly total (USD)</div>
-        <input type="range" id="monthlySlider" min="2500" max="25000" step="500" value="10000" />
-      </div>
-      <div style="width:200px">
-        <div class="tiny">Exact value</div>
-        <input type="number" id="monthlyInput" min="0" step="100" value="10000" />
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="right">
-      <div class="badge">Monthly total: <strong id="monthlyTotal" class="mono"></strong></div>
-      <div class="badge">12-month total: <strong id="yearTotal" class="mono"></strong></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <h2>12-month schedule</h2>
-    <div class="muted">Same split each month (static). If you want “speed up / slow down” logic, use the other page.</div>
-    <div class="divider"></div>
-    <div style="overflow:auto">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:120px">Month</th>
-            <th style="width:120px">Total</th>
-            <th>Breakdown</th>
-          </tr>
-        </thead>
-        <tbody id="schedBody"></tbody>
-      </table>
-    </div>
-  </aside>
-</div>
-
-<!-- Modal -->
-<div id="modal">
-  <div style="width:100%;max-width:920px;">
-    <div class="card" id="modalCard">
-      <div class="row" style="justify-content:space-between;align-items:flex-start">
-        <div>
-          <h2 id="mTitle" style="margin:0 0 6px 0;">Token Thesis</h2>
-          <div class="tiny" id="mSector"></div>
+        <h1>High-Risk Asymmetric DCA — January</h1>
+        <div class="sub">
+          A static, shareable page: set your monthly buy amount, see January’s allocations, and click any token for the full thesis + links to track metrics & trade.
         </div>
-        <button class="btn" id="btnClose">Close</button>
       </div>
-      <div class="divider"></div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <div class="pill warn" title="Not financial advice. This is a speculative plan.">
+          <span class="dot"></span>
+          High-risk / high-volatility
+        </div>
+        <div class="pill ok" title="Built for monthly DCA with reassessment checkpoints.">
+          <span class="dot"></span>
+          DCA + monthly checkpoints
+        </div>
+      </div>
+    </header>
 
-      <div class="kpi" id="mTags"></div>
+    <div class="grid">
+      <!-- LEFT -->
+      <section class="card">
+        <div class="hd">
+          <div>
+            <div class="pill warn"><span class="dot"></span>Important disclaimer</div>
+          </div>
+          <div class="badge">Static page • January only</div>
+        </div>
+        <div class="bd">
+          <div class="small muted">
+            This page is for information and planning only. It is not investment advice. Crypto assets can go to zero, liquidity can vanish, and narratives can break overnight.
+            Assume every position can lose 100% unless proven otherwise by continuous evidence.
+          </div>
 
-      <div class="divider"></div>
-      <h3>Why it’s in the basket</h3>
-      <div class="muted" id="mWhy"></div>
+          <div class="hr"></div>
 
-      <div class="divider"></div>
-      <h3>What has to go right (win condition)</h3>
-      <ul id="mWin"></ul>
+          <div class="card" style="box-shadow:none; border-color:var(--border); background: rgba(0,0,0,.16);">
+            <div class="bd">
+              <div class="row">
+                <div>
+                  <div class="muted small">Monthly buy-in total</div>
+                  <div class="mono" style="font-size:20px;" id="monthlyLabel">$10,000</div>
+                </div>
+                <div class="badge" id="monthsLabel">Plan length: 12 months</div>
+              </div>
+              <div class="slider">
+                <input id="monthlySlider" type="range" min="1000" max="25000" step="250" value="10000" />
+                <div class="row small muted" style="margin-top:8px;">
+                  <span>$1,000</span>
+                  <span>$25,000</span>
+                </div>
+              </div>
 
-      <div class="divider"></div>
-      <h3>Why 30–100× is plausible in good conditions</h3>
-      <ul id="mX"></ul>
+              <div class="kpi">
+                <div class="box">
+                  <div class="label">January deploy</div>
+                  <div class="val" id="janDeploy">$10,000</div>
+                </div>
+                <div class="box">
+                  <div class="label">STRX portion</div>
+                  <div class="val" id="strxDeploy">$3,000</div>
+                </div>
+              </div>
 
-      <div class="divider"></div>
-      <h3>Failure modes (how it dies)</h3>
-      <ul id="mFail"></ul>
+              <div class="footnote">
+                Amounts update instantly. Only January has an allocation list on this page (months 2–12 intentionally blank).
+              </div>
+            </div>
+          </div>
 
-      <div class="divider"></div>
-      <h3>Practical notes</h3>
-      <div class="muted" id="mNotes"></div>
+          <div class="hr"></div>
+
+          <!-- ~2000 word strategy section -->
+          <div class="strategy">
+            <h3>Strategy overview — “barbell + evidence-driven DCA”</h3>
+            <p>
+              The core idea here is deliberately unglamorous: treat this as a <em>high-risk satellite portfolio</em> whose job is to capture asymmetric upside
+              (30–100x “if the thesis lands”) while keeping the process disciplined enough that you don’t accidentally convert “high risk” into “high chaos.”
+              That discipline is mostly about two things: (1) owning the right kind of risk, and (2) insisting on evidence as time passes.
+            </p>
+            <p>
+              “Barbell” means you accept that most of this bucket may underperform or die, but you also want the surviving winners to be large enough
+              to matter. In practice, that pushes you toward projects with a plausible path to becoming infrastructure — not just a product, but a layer that
+              other products route through. Infrastructure projects are boring until they aren’t, and then they’re suddenly everywhere.
+              Your stated bias (connecting tech to traditional financial markets and emerging-market on-ramps) fits that pattern: the biggest multipliers
+              usually come from being a bridge people don’t notice until it’s painful to remove.
+            </p>
+            <p>
+              The second pillar is <strong>evidence-driven DCA</strong>. DCA is not “buy forever no matter what.” DCA is “buy while the hypothesis still
+              matches reality.” The trap in crypto is that narratives can persist long after fundamentals break (and vice versa). So you want a repeatable
+              process with a few high-signal checkpoints that nudge you to either (a) keep buying, (b) pause, or (c) rotate out.
+              That’s why each token in this list is supposed to be trackable by simple metrics (adoption, revenue/fees, TVL, usage, integrations, exchange
+              liquidity, developer momentum). If the metrics don’t move over time, the “asymmetric” part becomes fantasy.
+            </p>
+
+            <h3>Why January is a single-month “active list”</h3>
+            <p>
+              This page is intentionally “January only.” The goal is to avoid fake precision. Multi-month allocations written today often become stale
+              the moment the market regime changes (macro liquidity, risk appetite, regulation headlines, L2/L1 rotation, AI narrative, RWA narrative, etc.).
+              So instead of pretending we know the future, we lock in one month of action and leave the next months blank as a forcing function:
+              you reassess monthly with the same lens.
+            </p>
+            <p>
+              If the market runs hard, your “monthly checkpoint” might become “bi-weekly” for sell discipline (because parabolas don’t respect calendars).
+              If the market chops sideways, monthly is fine. If the market collapses, you may slow buys and use the time to re-check whether the teams and
+              products are still shipping. The calendar is just a cadence; the real governor is evidence.
+            </p>
+
+            <h3>Portfolio construction logic</h3>
+            <p>
+              This January set deliberately diversifies across a few “infrastructure-adjacent” sectors:
+              <strong>RWA / tokenized finance (ONDO)</strong>, <strong>cross-chain connectivity (AXL)</strong>,
+              <strong>oracle plumbing (LINK)</strong>, <strong>decentralized compute (AKT)</strong>,
+              <strong>AI/3D rendering compute demand (RENDER)</strong>, <strong>data storage permanence (AR)</strong>,
+              <strong>DA + modular blockchains (TIA)</strong>, <strong>DEX / liquidity rail (RUNE)</strong>,
+              plus two higher-idiosyncratic bets (<strong>STRX</strong> as the large asymmetric swing, and <strong>AZERO</strong> as a long-vol L1 ecosystem play).
+            </p>
+            <p>
+              The weights reflect a “conviction tilt” toward STRX as your chosen primary high-risk bet, while still retaining a
+              portfolio of other possible winners in case the niche plays out differently than expected.
+              That’s the whole point of the barbell: you don’t need 10 winners — you need one or two that truly land.
+            </p>
+
+            <h3>How to think about “30–100x conservative” without lying to yourself</h3>
+            <p>
+              “Conservative 30–100x” sounds like a contradiction, because it is — unless you define it properly.
+              It does <em>not</em> mean “likely.” It means “the upside is large <em>conditional on success</em> and the success conditions are at least coherent.”
+              In other words: if a project becomes a market leader in its niche, the implied market cap expansion could plausibly support 30–100x from
+              depressed or early-stage levels. That’s a conditional statement, not a forecast.
+            </p>
+            <p>
+              The discipline here is to treat each token like a hypothesis with falsifiable conditions. Example: “If RWA tokenization becomes mainstream,
+              and ONDO captures a meaningful share, then…” or “If cross-chain messaging becomes standardized and AXL is one of the default rails, then…”
+              When the “if” stops looking plausible, you stop feeding it capital.
+            </p>
+
+            <h3>Sell discipline: scaling out is the real edge</h3>
+            <p>
+              Most people talk about buying. Very few are methodical about selling. In high-vol crypto, selling is where you protect your future self.
+              A practical approach is staged selling: recover principal when a position has clearly overperformed, then let the remainder ride
+              with trailing rules. This prevents the classic cycle: “Up 20x → back down to 3x → still proud you ‘held’.”
+              That’s not sovereign. That’s Stockholm syndrome with a chart.
+            </p>
+            <p>
+              A simple template (not enforced on this static page, but implied by the plan):
+              take small profit slices at major multiple milestones (e.g., 3x / 5x / 10x / 20x) and/or when momentum goes parabolic.
+              Keep a “moonbag” only if the underlying adoption metrics keep rising. If price moons while usage flatlines, that’s usually distribution.
+            </p>
+
+            <h3>January token selection summaries (why each is here)</h3>
+            <p><strong>STRX (StrikeX)</strong> is the primary asymmetric swing in this month’s list. The thesis is not “it will pump,” but “it can become an
+              adoption bridge” — something that people actually use to get value into/out of crypto in a way that can interface with real-world rails.
+              This is naturally aligned with your preference for connective tissue and emerging-market on-ramps. The risk is very real: smaller projects
+              can be outcompeted, liquidity can be thin, and execution risk dominates.
+            </p>
+            <p><strong>LINK (Chainlink)</strong> is here because oracles are the plumbing for everything that pretends to touch reality:
+              RWAs, DeFi, derivatives, and even “traditional finance on-chain.” If tokenized finance grows, demand for credible data and execution layers
+              grows with it. LINK is a lower-vol (relative) infrastructure anchor in an otherwise spicy basket.
+            </p>
+            <p><strong>ONDO</strong> is a direct expression of the RWA/tokenized finance thesis — real assets on-chain with institutional-adjacent narratives.
+              If the next cycle features “tradfi meets crypto” as more than marketing, ONDO is one of the names that tends to sit near that narrative center.
+              The risk is regulatory and platform concentration: RWAs are exactly where rules and gatekeeping show up first.
+            </p>
+            <p><strong>TIA (Celestia)</strong> is the modular thesis: data availability as a separate layer. If application-specific chains keep proliferating,
+              DA demand can become a real market. The risk is that DA becomes commoditized or captured by alternative stacks.
+            </p>
+            <p><strong>AKT (Akash)</strong> is decentralized compute. If AI + general cloud demand continues to expand and censorship/availability pressures rise,
+              open compute marketplaces have a plausible tailwind. The risk is brutal competition and the fact that “decentralized cloud” is harder than it looks.
+            </p>
+            <p><strong>RENDER</strong> is a bet on GPU-demand markets (rendering, AI, content pipelines). It’s not purely “AI hype” — it’s about compute demand
+              becoming a tradeable commodity with network effects. Risk: token value capture and market structure can be messy.
+            </p>
+            <p><strong>AR (Arweave)</strong> is permanence: on-chain-ish archival storage. If more financial and cultural artifacts want tamper-resistant permanence,
+              AR has a coherent role. Risk: demand elasticity and the “good enough” alternatives.
+            </p>
+            <p><strong>RUNE (THORChain)</strong> is cross-chain liquidity. If cross-chain swapping remains a core user need, liquidity rails can capture real flow.
+              Risk: bridge/DEX security perceptions and competition from other routing layers.
+            </p>
+            <p><strong>AXL (Axelar)</strong> is cross-chain messaging/interop. If interop becomes standardized infrastructure, AXL has a plausible lane.
+              Risk: winning interop stacks tend to consolidate hard; second place can get wrecked.
+            </p>
+            <p><strong>AZERO (Aleph Zero)</strong> is the highest-idiosyncrasy infra bet: a chain + ecosystem with privacy/security narratives and enterprise positioning.
+              It’s here as a “long-vol” ecosystem bet, not as a short-term trade. Risk: ecosystem traction and liquidity.
+            </p>
+
+            <p class="mini">
+              The point is not that every thesis is “right.” The point is that each thesis is coherent, testable over time, and diversified across
+              different types of adoption paths — while still leaning into your preference for connective infrastructure.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="card">
+        <div class="hd">
+          <div>
+            <div class="pill"><span class="dot"></span>January allocations</div>
+          </div>
+          <div class="badge mono">Weights = 100%</div>
+        </div>
+        <div class="bd">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:52%;">Month</th>
+                <th>Tokens</th>
+              </tr>
+            </thead>
+            <tbody id="monthsTable">
+              <!-- injected by JS -->
+            </tbody>
+          </table>
+          <div class="footnote">
+            Only January is populated by design. Click any token to open the thesis + external links.
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
-</div>
+
+  <!-- Modal -->
+  <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <div class="modalHeader">
+        <div>
+          <h2 class="modalTitle" id="modalTitle">Token</h2>
+          <div class="small muted" id="modalSubtitle"></div>
+          <div class="links" id="modalLinks"></div>
+        </div>
+        <button class="modalClose" id="modalClose">Close</button>
+      </div>
+      <div class="modalBody" id="modalBody"></div>
+    </div>
+  </div>
 
 <script>
-  // ---- Config ----
-  // Percentages chosen to match a “backbone + adoption rails + options” shape.
-  // Adjust these weights as you like; they must sum to 100.
+  // --- January portfolio (weights sum to 100) ---
+  // NOTE: Adjust weights any time; everything updates automatically.
   const TOKENS = [
     {
-      token:"STRX", sector:"Tokenised TradFi",
-      pct:25,
-      tags:["Overweight thesis bet","RWA rails","Venture-style"],
-      why:"This is the highest-upside ‘specific bet’ in the basket: success is tied to production-grade rails for real-world asset flows and distribution through existing market on-ramps.",
-      win:[
-        "Real product in production (not just beta) with verifiable volume",
-        "Clear distribution through major integration(s) / partner channels",
-        "Expansion into additional asset classes or jurisdictions without breaking compliance"
-      ],
-      x:[
-        "If it becomes a category leader, the token can rerate from ‘speculative option’ → ‘financial middleware asset’",
-        "High beta to the RWA cycle: capital rotates hard into credible TradFi-to-crypto rails in risk-on regimes",
-        "Optionality: success can compress time—market often reprices leaders before revenue fully matures"
-      ],
-      fail:[
-        "Perpetual delays: no production launch or no meaningful volume post-launch",
-        "Partner retreat / integration cancelled / distribution fails",
-        "Regulatory friction blocks core utility or token capture"
-      ],
-      notes:"Treat like a venture position: size is earned by execution. In a proper bull run, de-risk mechanically if price outruns real traction."
+      symbol:"STRX", name:"StrikeX", weight:30,
+      sector:"High-risk infrastructure / adoption bridge",
+      thesis: `
+        <p><strong>Core thesis:</strong> STRX is the high-vol asymmetric bet in this basket. The idea is simple: if StrikeX becomes meaningfully adopted as a bridge between everyday users and crypto rails (especially in regions where on-ramps and trust are bottlenecks), the token can re-rate dramatically.</p>
+        <p><strong>Why it made January:</strong> You’re explicitly bullish on connective rails into longer-term financial markets and emerging regions; this is the “if it lands, it really lands” expression of that view.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Visible user adoption growth (wallet/users/transactions, integrations, product releases).</li>
+          <li>Liquidity improves over time (more venues, tighter spreads, deeper books).</li>
+          <li>Clear token utility that aligns with usage (not just “governance vibes”).</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Execution risk / competition: bigger players can copy, out-market, or out-partner.</li>
+          <li>Liquidity risk: smaller tokens can move violently and be hard to exit at size.</li>
+          <li>Token value capture: usage doesn’t always translate to token demand.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/strike-x"},
+        cex:{label:"Largest CEX (MEXC)", url:"https://www.mexc.com/en-GB/price/STRX"},
+        dex:{label:"Big DEX (PancakeSwap)", url:"https://pancakeswap.finance/swap?outputCurrency=0xd6fdde76b8c1c45b33790cc8751d5b88984c44ec"}
+      }
     },
     {
-      token:"LINK", sector:"Oracles & Settlement",
-      pct:15,
-      tags:["Backbone","Interoperability","TradFi-friendly"],
-      why:"If cross-chain + RWA settlement expands, the default oracle/settlement layer can become a toll-road. LINK is positioned for ‘boring but huge’ infrastructure adoption.",
-      win:[
-        "CCIP adoption expands with real institutional usage",
-        "More chains + apps route critical value through LINK-secured infrastructure",
-        "Token utility remains central to security and network economics"
-      ],
-      x:[
-        "A major shift from ‘crypto infra’ → ‘financial middleware’ can re-rate the entire valuation regime",
-        "Large TAM: data + settlement are required for every serious on-chain financial product",
-        "If adoption crosses a threshold, it becomes sticky—defaults are hard to displace"
-      ],
-      fail:[
-        "Competing standards dominate and route around LINK",
-        "Institutional traction fails to materialise",
-        "Token capture weakens (value accrues elsewhere)"
-      ],
-      notes:"Less ‘100×’ than small caps, but still capable of large cycle moves if it becomes the default settlement middleware."
+      symbol:"LINK", name:"Chainlink", weight:10,
+      sector:"Oracles / TradFi & RWA plumbing",
+      thesis: `
+        <p><strong>Core thesis:</strong> If crypto touches reality (prices, rates, assets, proofs, execution), it needs credible data and/or execution layers. Chainlink is the long-lived “plumbing” bet.</p>
+        <p><strong>Why it made January:</strong> It’s one of the cleaner expressions of “connective tissue to financial markets” without being a microcap execution gamble.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Continued integrations and usage growth across major protocols and RWAs.</li>
+          <li>Fees/revenue/usage metrics trend upward across market cycles.</li>
+          <li>Institutional and enterprise partnerships translate to on-chain activity.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Oracle commoditization and competing standards.</li>
+          <li>Token value capture debates (usage vs token demand).</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/chainlink"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/LINK_USDT"},
+        dex:{label:"Big DEX (Uniswap)", url:"https://app.uniswap.org/"}
+      }
     },
     {
-      token:"TIA", sector:"Modular Data Availability",
-      pct:10,
-      tags:["Backbone","Modular stack","Rollup growth"],
-      why:"Celestia is a clean bet on the modular thesis: many rollups, shared DA. If DA demand explodes with appchains, the winner can reprice hard.",
-      win:[
-        "Rollup/appchain count grows meaningfully",
-        "DA usage/fees trend upward with real demand",
-        "Developer mindshare stays strong versus other DA options"
-      ],
-      x:[
-        "DA is a fundamental resource: if demand scales, the pricing power can emerge quickly",
-        "Leaders in new primitives often get ‘platform’ multiples in bull markets",
-        "Modular narratives can go reflexive: more rollups → more DA → more rollups"
-      ],
-      fail:[
-        "Competing DA layer wins mindshare and deployments",
-        "DA demand stays niche / doesn’t translate to meaningful usage",
-        "Token economics fail to capture the value of growth"
-      ],
-      notes:"High upside if modular becomes dominant; it’s a ‘pick-and-shovel’ position, not a single app bet."
+      symbol:"ONDO", name:"Ondo", weight:10,
+      sector:"RWA / Tokenized finance",
+      thesis: `
+        <p><strong>Core thesis:</strong> RWA/tokenized finance is a plausible next-cycle center of gravity. If on-chain wrappers for traditional assets scale, platforms sitting near that flow can expand quickly.</p>
+        <p><strong>Why it made January:</strong> Direct alignment with “connecting tech to longer-term financial markets.”</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Growth in RWA AUM and active usage (not just marketing).</li>
+          <li>Listings/liquidity deepening as institutional attention rises.</li>
+          <li>Regulatory clarity improves (or at least doesn’t worsen materially).</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Regulatory / compliance complexity.</li>
+          <li>Platform concentration / counterparty risk narratives.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/ondo-finance"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/ONDO_USDT"},
+        dex:{label:"Big DEX (Uniswap)", url:"https://app.uniswap.org/"}
+      }
     },
     {
-      token:"AR", sector:"Decentralised Permanent Storage",
-      pct:10,
-      tags:["Backbone","Permanent data","AI-adjacent"],
-      why:"Permanent storage is weirdly fundamental: archives, AI datasets, on-chain history, and ‘never lose it’ data. If AR becomes a default layer, it can explode in cycles.",
-      win:[
-        "Sustained growth in data written",
-        "Major integrations that drive recurring writes",
-        "Narrative + utility align (not just hype)"
-      ],
-      x:[
-        "If AR becomes the default permanence layer, it shifts from niche to infrastructure",
-        "AI and provenance narratives can amplify demand (datasets, attribution, audit trails)",
-        "Storage leaders can re-rate fast when usage visibly climbs"
-      ],
-      fail:[
-        "Usage stagnation or multi-month declines",
-        "A clearly superior storage competitor becomes the default",
-        "Integrations fail to convert into sustained writing demand"
-      ],
-      notes:"Watch real usage trends. This is a ‘utility tells the truth’ token over time."
+      symbol:"TIA", name:"Celestia", weight:8,
+      sector:"Modular / Data availability",
+      thesis: `
+        <p><strong>Core thesis:</strong> If modular stacks keep proliferating, data availability becomes a real market. Celestia is a leading DA-native narrative token.</p>
+        <p><strong>Why it made January:</strong> It diversifies away from pure “finance rails” into a separate infra wedge that can still win big in a scaling-driven cycle.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Rollups/appchains using Celestia DA grows (real usage).</li>
+          <li>Developer ecosystem expands; new deployments follow.</li>
+          <li>Fee/throughput metrics trend upward.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>DA commoditization or alternative stacks winning mindshare.</li>
+          <li>Token emissions / unlocks affecting price cycles.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/celestia"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/TIA_USDT"},
+        dex:{label:"Big DEX (Osmosis)", url:"https://app.osmosis.zone/"}
+      }
     },
     {
-      token:"ONDO", sector:"RWA Yield",
-      pct:10,
-      tags:["Adoption rails","Yield","TradFi bridge"],
-      why:"A direct bet on tokenised yield products scaling. If RWAs become a dominant narrative, the leading yield rails can see major inflows.",
-      win:[
-        "TVL grows materially over quarters",
-        "Institutional/regulated partnerships expand distribution",
-        "Redemptions and liquidity events remain controlled"
-      ],
-      x:[
-        "RWA yield is one of the most ‘understandable’ crypto products for TradFi capital",
-        "If it becomes a category winner, flows can be enormous in bull regimes",
-        "Yield primitives often become sticky once users park capital"
-      ],
-      fail:[
-        "Regulatory clampdown blocks the model",
-        "TVL declines or redemption pressure spikes",
-        "Competitor becomes the default RWA yield venue"
-      ],
-      notes:"This is closer to an adoption/flow bet than a pure tech bet."
+      symbol:"AKT", name:"Akash", weight:8,
+      sector:"Decentralized compute marketplace",
+      thesis: `
+        <p><strong>Core thesis:</strong> Compute demand is rising (AI, inference, content). Open marketplaces for compute can gain traction if they win on cost, availability, and censorship-resistance.</p>
+        <p><strong>Why it made January:</strong> It’s a non-correlated infra bet relative to RWAs and cross-chain, with real-world demand tailwinds.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Usage growth (deployments, providers, capacity used).</li>
+          <li>Revenue/fees and real customer stories increase.</li>
+          <li>Ecosystem integrations (tooling, dev experience) improves.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Cloud competition is savage; demand doesn’t guarantee token capture.</li>
+          <li>Adoption may remain niche without killer UX.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/akash-network"},
+        cex:{label:"Largest CEX (Coinbase)", url:"https://www.coinbase.com/price/akash-network"},
+        dex:{label:"Big DEX (Osmosis)", url:"https://app.osmosis.zone/"}
+      }
     },
     {
-      token:"AKT", sector:"Decentralised Compute (DePIN)",
-      pct:7,
-      tags:["Compute","AI demand","DePIN"],
-      why:"If decentralised compute meaningfully competes on cost/availability, usage can ramp quickly. This is an option on real workloads migrating.",
-      win:[
-        "Compute jobs/GPU hours rise consistently",
-        "Real AI/enterprise usage appears (not just crypto-native)",
-        "Supply side remains healthy without quality collapse"
-      ],
-      x:[
-        "Compute is enormous: even a tiny share can justify huge repricing",
-        "AI cycles can drag compute tokens aggressively",
-        "Winners can scale quickly if they hit product-market-fit"
-      ],
-      fail:[
-        "Usage stalls or declines",
-        "Centralised clouds crush price/UX and demand evaporates",
-        "Quality/reliability issues prevent serious workloads"
-      ],
-      notes:"Treat as a high-beta option; let usage—not vibes—justify adds."
+      symbol:"RENDER", name:"Render", weight:8,
+      sector:"GPU demand / compute networks",
+      thesis: `
+        <p><strong>Core thesis:</strong> GPU-demand markets (rendering + AI pipelines) are expanding. Networks that can route compute demand efficiently can become structural winners.</p>
+        <p><strong>Why it made January:</strong> It captures the “compute as a commodity” trend while staying in a relatively established project versus tiny microcaps.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Network usage and paid jobs trend upward.</li>
+          <li>Partnerships translate into measurable throughput.</li>
+          <li>Liquidity and market depth remain strong.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Value capture and competition from centralized providers.</li>
+          <li>Narrative-driven runs that later mean-revert hard.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/render-token"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/RENDER_USDT"},
+        dex:{label:"Big DEX (Uniswap)", url:"https://app.uniswap.org/"}
+      }
     },
     {
-      token:"RNDR", sector:"Decentralised GPU / Render",
-      pct:7,
-      tags:["GPU","AI cycle","Network utilisation"],
-      why:"If decentralised GPU networks become credible sources of supply, utilisation + demand can drive strong cycle performance.",
-      win:[
-        "Utilisation trends upward (not just speculative pump)",
-        "Enterprise/AI demand signals improve",
-        "Token remains central to how value flows through the network"
-      ],
-      x:[
-        "GPU scarcity narratives can re-rate quickly in bull cycles",
-        "If network effects kick in, leaders can compound adoption",
-        "High reflexivity: demand shocks translate into token repricing"
-      ],
-      fail:[
-        "Utilisation drops materially",
-        "Demand narrative breaks (AI slowdown / supply glut)",
-        "Token capture weakens"
-      ],
-      notes:"Good to de-risk mechanically if price outruns utilisation."
+      symbol:"AR", name:"Arweave", weight:6,
+      sector:"Permanent storage / data archiving",
+      thesis: `
+        <p><strong>Core thesis:</strong> Permanent, tamper-resistant storage has a real niche (archives, history, proofs, cultural artifacts, and potentially financial records). If permanence becomes fashionable again, AR can re-rate.</p>
+        <p><strong>Why it made January:</strong> Diversifies into a different “infra primitive” with a clear story, not just a meme narrative.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Usage and storage demand grows over time.</li>
+          <li>Ecosystem apps actually rely on Arweave permanence.</li>
+          <li>Fee/revenue trends validate demand.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Alternative storage solutions capture mindshare.</li>
+          <li>Demand may be cyclical and hype-driven.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/arweave"},
+        cex:{label:"Largest CEX (Binance price page)", url:"https://www.binance.com/en/price/arweave"},
+        dex:{label:"Big DEX (Uniswap)", url:"https://app.uniswap.org/"}
+      }
     },
     {
-      token:"AZERO", sector:"Privacy / EVM",
-      pct:5,
-      tags:["Option","Privacy","Narrative volatility"],
-      why:"Privacy is cyclical and politically sensitive. If privacy becomes ‘needed again’ and real apps use it, a leader can rip.",
-      win:[
-        "Shielded transactions rise",
-        "Real apps ship and retain users",
-        "Privacy UX becomes actually usable"
-      ],
-      x:[
-        "Privacy leaders can re-rate violently when the narrative returns",
-        "If privacy primitives become standard tooling, it gets infrastructure multiples",
-        "Small-ish relative positioning can enable bigger multiples"
-      ],
-      fail:[
-        "Apps fail to attract users over multiple months",
-        "Regulatory suppression blocks distribution",
-        "No compelling product wedge"
-      ],
-      notes:"This is a pure optionality slice. Keep it small; let proof earn size."
+      symbol:"RUNE", name:"THORChain", weight:6,
+      sector:"Cross-chain liquidity rail",
+      thesis: `
+        <p><strong>Core thesis:</strong> Cross-chain swapping remains a persistent user need. Liquidity rails that can route value across chains can capture meaningful flow in risk-on periods.</p>
+        <p><strong>Why it made January:</strong> It’s aligned with “connectivity” while being a different shape of bet than messaging/oracles.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Swap volume and active users trend upward through the cycle.</li>
+          <li>Security perception remains strong (no major catastrophic events).</li>
+          <li>Liquidity depth improves.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Bridge/DEX security narratives can kill flow quickly.</li>
+          <li>Competing routers and aggregators compress margins.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/thorchain"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/RUNE_USDT"},
+        dex:{label:"Big DEX (THORSwap)", url:"https://app.thorswap.finance/"}
+      }
     },
     {
-      token:"RUNE", sector:"Cross-chain Liquidity",
-      pct:6,
-      tags:["Real usage","Cross-chain","Battle tested"],
-      why:"Cross-chain liquidity is unavoidable; if this remains a core route for native swaps, volume can justify serious upside in risk-on markets.",
-      win:[
-        "Swap volume rises and stays resilient",
-        "New chain integrations land without new blow-up products",
-        "Security track record improves"
-      ],
-      x:[
-        "Real usage gives narrative durability in bull runs",
-        "If cross-chain becomes mainstream, liquidity rails can rerate",
-        "Volume/fee reflexivity can accelerate moves"
-      ],
-      fail:[
-        "Major exploit or trust loss",
-        "Volume declines for months",
-        "Intents-based routing makes it irrelevant"
-      ],
-      notes:"Treat protocol risk seriously; don’t average down into broken trust."
+      symbol:"AXL", name:"Axelar", weight:7,
+      sector:"Cross-chain messaging / interop",
+      thesis: `
+        <p><strong>Core thesis:</strong> Interop tends to consolidate — but if Axelar is one of the rails that becomes “default,” the upside can be large. Interop is a picks-and-shovels layer for multi-chain reality.</p>
+        <p><strong>Why it made January:</strong> Strong alignment with “connective technologies” while staying diversified versus oracles and liquidity rails.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Integrations and routed volume increase.</li>
+          <li>Developer adoption and SDK usage grows.</li>
+          <li>Security track record stays clean.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Interop winner-takes-most dynamics.</li>
+          <li>Security incidents can permanently scar trust.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/axelar"},
+        cex:{label:"Largest CEX (Binance)", url:"https://www.binance.com/en/trade/AXL_USDT"},
+        dex:{label:"Big DEX (Uniswap)", url:"https://app.uniswap.org/"}
+      }
     },
     {
-      token:"ILV", sector:"Gaming",
-      pct:3,
-      tags:["Venture bet","Retention","Revenue loop"],
-      why:"Gaming is brutal, but breakouts are massive. This is a small ‘lottery ticket’ position on a studio/product achieving real retention and revenue.",
-      win:[
-        "Active players + retention improve across updates",
-        "Revenue becomes meaningful (not just token hype)",
-        "Distribution channels expand sustainably"
-      ],
-      x:[
-        "If it becomes a breakout, gaming tokens can do absurd multiples",
-        "Revenue-linked narratives can drive reratings",
-        "Small allocation can still contribute meaningfully if it hits"
-      ],
-      fail:[
-        "Retention remains poor after multiple updates",
-        "Revenue never materialises",
-        "Loses mindshare to better games"
-      ],
-      notes:"Keep small. Scale only if user numbers and revenue actually climb."
-    },
-    {
-      token:"AXL", sector:"Interoperability",
-      pct:2,
-      tags:["Plumbing","Institutional infra","Value-capture risk"],
-      why:"Interoperability is ‘plumbing’. If it becomes the institutional-grade route and the token captures value, upside can be strong—otherwise it’s just a tech story.",
-      win:[
-        "Throughput increases with real usage",
-        "Integrations drive actual routing",
-        "Token remains necessary for security/value capture"
-      ],
-      x:[
-        "Plumbing winners can get huge when everyone depends on them",
-        "Interop demand rises with multi-chain complexity",
-        "If it becomes a default, switching costs help"
-      ],
-      fail:[
-        "Usage flat despite integrations",
-        "Token gets sidelined economically",
-        "A dominant standard routes around it"
-      ],
-      notes:"Small allocation: this is a ‘token capture’ bet as much as a ‘tech’ bet."
+      symbol:"AZERO", name:"Aleph Zero", weight:7,
+      sector:"L1 ecosystem / privacy & enterprise positioning",
+      thesis: `
+        <p><strong>Core thesis:</strong> AZERO is a long-vol ecosystem bet. If the chain’s ecosystem and DeFi surface area expand meaningfully, the upside can be large from low base effects.</p>
+        <p><strong>Why it made January:</strong> It adds an idiosyncratic infra option that can move differently than the RWA / interop / compute cluster.</p>
+        <div class="sectionTitle">What would make it work?</div>
+        <ul>
+          <li>Ecosystem traction (apps, users, liquidity) improves steadily.</li>
+          <li>DeFi venues mature (on-chain liquidity becomes real).</li>
+          <li>Clear narrative + shipping cadence stays strong.</li>
+        </ul>
+        <div class="sectionTitle">Top risks</div>
+        <ul>
+          <li>Low liquidity / slow ecosystem growth.</li>
+          <li>Competition from larger L1 ecosystems.</li>
+        </ul>
+      `,
+      links:{
+        metrics:{label:"Metrics (CoinGecko)", url:"https://www.coingecko.com/en/coins/aleph-zero"},
+        cex:{label:"Largest CEX (MEXC)", url:"https://www.mexc.com/exchange/AZERO_USDT"},
+        dex:{label:"Big DEX (AndromedaSwap)", url:"https://andromedaswap.org/"}
+      }
     }
   ];
 
-  // ---- Helpers ----
-  const $ = (id)=>document.getElementById(id);
-  const fmtUSD = (n)=> new Intl.NumberFormat(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0}).format(n);
-  const fmtPct = (p)=> `${p.toFixed(0)}%`;
+  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-  function sumPct(){ return TOKENS.reduce((a,t)=>a+t.pct,0); }
+  // --- helpers ---
+  const fmtUSD = (n)=> n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+  const el = (id)=> document.getElementById(id);
 
-  function monthNamesNext12(){
-    const arr = [];
-    const d = new Date();
-    d.setDate(1);
-    for(let i=0;i<12;i++){
-      const x = new Date(d.getFullYear(), d.getMonth()+i, 1);
-      const label = x.toLocaleString(undefined,{month:"short", year:"numeric"});
-      arr.push(label);
-    }
-    return arr;
-  }
+  function buildMonthsTable(monthly){
+    const tbody = el("monthsTable");
+    tbody.innerHTML = "";
 
-  function calcAlloc(monthly){
-    return TOKENS.map(t=>({
-      ...t,
-      monthly: Math.round((monthly * (t.pct/100))),
-    }));
-  }
-
-  function render(){
-    const slider = $("monthlySlider");
-    const input = $("monthlyInput");
-
-    let monthly = Number(input.value || slider.value || 0);
-    if(Number.isNaN(monthly) || monthly < 0) monthly = 0;
-
-    // Keep slider + input in sync
-    slider.value = String(Math.max(Number(slider.min), Math.min(Number(slider.max), monthly)));
-    input.value = String(monthly);
-
-    $("monthlyTotal").textContent = fmtUSD(monthly);
-    $("yearTotal").textContent = fmtUSD(monthly * 12);
-
-    // Validate pct sum
-    const s = sumPct();
-    $("asOf").textContent = s === 100 ? "Plan OK" : "Fix %";
-    $("stamp").textContent = s === 100 ? "Weights sum to 100%" : `Weights sum to ${s}%`;
-
-    // Allocation table
-    const alloc = calcAlloc(monthly);
-    const body = $("allocBody");
-    body.innerHTML = "";
-    alloc.forEach(t=>{
+    MONTHS.forEach((m, idx)=>{
       const tr = document.createElement("tr");
-      tr.className = "trow";
-      tr.innerHTML = `
-        <td>
-          <div class="token">${t.token}</div>
-          <div class="tiny">${t.tags[0] || ""}</div>
-        </td>
-        <td class="tiny">${t.sector}</td>
-        <td><div class="pct">${fmtPct(t.pct)}</div></td>
-        <td><div class="amt mono">${fmtUSD(t.monthly)}</div></td>
-        <td><button class="btn small primary" data-token="${t.token}">View thesis</button></td>
-      `;
-      body.appendChild(tr);
-    });
+      const tdMonth = document.createElement("td");
+      tdMonth.innerHTML = `<div style="font-weight:700">${m}</div><div class="small muted">` +
+        (idx===0 ? `Active list` : `Intentionally blank`) + `</div>`;
+      tr.appendChild(tdMonth);
 
-    // schedule table
-    const months = monthNamesNext12();
-    const sb = $("schedBody");
-    sb.innerHTML = "";
-    months.forEach((m, idx)=>{
-      const parts = alloc.map(t=>`${t.token} ${fmtUSD(t.monthly)}`).join(" · ");
-      const tr = document.createElement("tr");
-      tr.className = "trow";
-      tr.innerHTML = `
-        <td><strong>${m}</strong></td>
-        <td class="mono">${fmtUSD(monthly)}</td>
-        <td class="tiny">${parts}</td>
-      `;
-      sb.appendChild(tr);
-    });
+      const tdTokens = document.createElement("td");
 
-    // bind thesis buttons
-    document.querySelectorAll("button[data-token]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const token = btn.getAttribute("data-token");
-        openThesis(token);
-      }, {once:true});
+      if(idx===0){
+        // January tokens list
+        const wrap = document.createElement("div");
+        wrap.style.display="grid";
+        wrap.style.gap="10px";
+
+        TOKENS.forEach(t=>{
+          const amount = monthly * (t.weight/100);
+          const btn = document.createElement("button");
+          btn.className="tokenBtn";
+          btn.type="button";
+          btn.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:2px; align-items:flex-start;">
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <strong>${t.symbol}</strong>
+                <span class="badge">${t.weight}%</span>
+              </div>
+              <div class="small muted">${t.name} • ${t.sector}</div>
+            </div>
+            <div class="alloc">${fmtUSD(amount)}</div>
+          `;
+          btn.addEventListener("click", ()=>openModal(t, amount));
+          wrap.appendChild(btn);
+        });
+
+        tdTokens.appendChild(wrap);
+      } else {
+        tdTokens.innerHTML = `<div class="small muted">—</div>`;
+      }
+
+      tr.appendChild(tdTokens);
+      tbody.appendChild(tr);
     });
   }
 
-  // ---- Modal ----
-  function openThesis(token){
-    const t = TOKENS.find(x=>x.token===token);
-    if(!t) return;
+  // --- modal logic ---
+  const overlay = el("modalOverlay");
+  const closeBtn = el("modalClose");
 
-    $("mTitle").textContent = `${t.token} — Thesis`;
-    $("mSector").textContent = t.sector;
+  function openModal(token, amount){
+    el("modalTitle").textContent = `${token.symbol} — ${token.name}`;
+    el("modalSubtitle").innerHTML = `<span class="badge">${token.weight}%</span> <span class="muted small">January buy: <span class="mono">${fmtUSD(amount)}</span></span>`;
 
-    // tags
-    const tags = $("mTags");
-    tags.innerHTML = "";
-    (t.tags || []).forEach(x=>{
-      const b = document.createElement("div");
-      b.className = "badge";
-      b.innerHTML = `<strong>${x}</strong>`;
-      tags.appendChild(b);
+    const links = el("modalLinks");
+    links.innerHTML = "";
+    const linkDefs = [token.links.metrics, token.links.cex, token.links.dex];
+    linkDefs.forEach(l=>{
+      const a = document.createElement("a");
+      a.className="linkBtn";
+      a.href = l.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = l.label;
+      links.appendChild(a);
     });
 
-    $("mWhy").textContent = t.why || "";
+    el("modalBody").innerHTML = token.thesis;
+    overlay.style.display="flex";
+    overlay.setAttribute("aria-hidden","false");
 
-    const win = $("mWin"); win.innerHTML = "";
-    (t.win || []).forEach(x=>{
-      const li = document.createElement("li"); li.textContent = x; win.appendChild(li);
-    });
-
-    const xx = $("mX"); xx.innerHTML = "";
-    (t.x || []).forEach(x=>{
-      const li = document.createElement("li"); li.textContent = x; xx.appendChild(li);
-    });
-
-    const fail = $("mFail"); fail.innerHTML = "";
-    (t.fail || []).forEach(x=>{
-      const li = document.createElement("li"); li.textContent = x; fail.appendChild(li);
-    });
-
-    $("mNotes").textContent = t.notes || "";
-
-    document.body.classList.add("modal-open");
-    $("modal").style.display = "flex";
+    // Prevent background scroll while modal open
+    document.body.style.overflow="hidden";
   }
 
   function closeModal(){
-    $("modal").style.display = "none";
-    document.body.classList.remove("modal-open");
+    overlay.style.display="none";
+    overlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
   }
 
-  // ---- Wiring ----
-  $("monthlySlider").addEventListener("input", ()=>{
-    $("monthlyInput").value = $("monthlySlider").value;
-    render();
-  });
+  closeBtn.addEventListener("click", closeModal);
+  overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeModal(); });
+  window.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeModal(); });
 
-  $("monthlyInput").addEventListener("input", ()=>{
-    render();
-  });
+  // --- slider updates ---
+  function updateAll(){
+    const monthly = Number(el("monthlySlider").value);
+    el("monthlyLabel").textContent = fmtUSD(monthly);
+    el("janDeploy").textContent = fmtUSD(monthly);
 
-  $("btnClose").addEventListener("click", closeModal);
-  $("modal").addEventListener("click", (e)=>{ if(e.target.id==="modal") closeModal(); });
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Escape" && $("modal").style.display !== "none") closeModal();
-  });
+    const strx = TOKENS.find(t=>t.symbol==="STRX");
+    el("strxDeploy").textContent = fmtUSD(monthly * (strx.weight/100));
 
-  render();
+    buildMonthsTable(monthly);
+  }
+
+  el("monthlySlider").addEventListener("input", updateAll);
+
+  // init
+  updateAll();
 </script>
 </body>
 </html>
